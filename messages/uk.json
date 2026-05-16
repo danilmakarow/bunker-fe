@@ -55,13 +55,60 @@
     "transitioning": "Гра починається…"
   },
   "game": {
-    "title": "Гра",
+    "title": "Гра {code}",
+    "loading": "Завантаження гри…",
+    "you": "Ви",
+    "locked": "Закрито",
     "exit": "Вийти",
     "exitConfirm": "Покинути гру?",
     "exitConfirmHint": "Твою карту буде збережено в історії.",
+    "finish": "Завершити гру",
+    "finishConfirm": "Завершити гру для всіх?",
+    "finishConfirmHint": "Гра перейде у фінальний стан і ніхто не зможе нічого розкривати.",
+    "finishedNotice": "Гру завершено",
+    "finishedHint": "Адмін завершив цю партію.",
+    "notInGame": "Кімната ще не у грі або вже завершена.",
+    "section": {
+      "biology": "Біологія",
+      "traits": "Картки персонажа",
+      "myCard": "Моя карта",
+      "others": "Інші гравці"
+    },
+    "infoSheet": {
+      "title": "Сценарій і бункер",
+      "apocalypseHeading": "Апокаліпсис",
+      "shelterHeading": "Бункер",
+      "populationRemainder": "Залишилось населення",
+      "location": "Розташування",
+      "area": "Площа",
+      "duration": "Запас часу",
+      "equipment": "Обладнання",
+      "supplies": "Запаси"
+    },
+    "kind": {
+      "AGE": "Вік",
+      "WEIGHT": "Вага",
+      "SEX": "Стать",
+      "GENDER": "Гендер",
+      "RACE": "Раса",
+      "HEALTH": "Здоров’я",
+      "PROFESSION": "Професія",
+      "HOBBY": "Хобі",
+      "PHOBIA": "Фобія",
+      "CHARACTER_TRAIT": "Риса",
+      "LUGGAGE": "Багаж",
+      "PERSONAL_FACT": "Особистий факт",
+      "ACTION_CARD": "Дія",
+      "CONDITION_CARD": "Умова"
+    },
+    "polarity": {
+      "POSITIVE": "Позитивно",
+      "NEUTRAL": "Нейтрально",
+      "NEGATIVE": "Негативно"
+    },
     "revealConfirm": "Розкрити {kind}?",
     "revealConfirmHint": "Це буде видно всім гравцям.",
-    "comingSoonNote": "Логіка гри з'явиться у M4–M5."
+    "comingSoonNote": "Розкриття атрибутів з'явиться у M5."
   },
   "errors": {
     "generic": "Сталася помилка. Спробуйте ще раз.",
