@@ -7,7 +7,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Box, Stack, Typography } from '@mui/material';
 import PageShell from '@/components/page-shell';
 import ParticipantList from '@/components/participant-list';
-import { GlassButton, GlassCard, GlassLabel, GlassSpinner } from '@/components/glass';
+import RoomCodeShare from '@/components/room-code-share';
+import { GlassButton, GlassSpinner } from '@/components/glass';
 import { confirm, alertModal } from '@/lib/modal/modal-store';
 import { notify } from '@/lib/notify';
 import { ApiError } from '@/lib/api/api-error';
@@ -237,33 +238,7 @@ const RoomPage = ({ params }: RoomPageProps) => {
       }
     >
       <Stack spacing={3} sx={{ pt: 3 }}>
-        <GlassCard
-          sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, py: 3 }}
-        >
-          <GlassLabel sx={{ mb: 0 }}>{t('title', { code: '' })}</GlassLabel>
-          <Box sx={{ display: 'flex', gap: 1 }}>
-            {code.split('').map((char, index) => (
-              <Box
-                key={index}
-                sx={{
-                  width: 52,
-                  height: 60,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '2.2rem',
-                  fontWeight: 700,
-                  color: 'rgba(0,0,0,0.88)',
-                  background: 'rgba(255,255,255,0.5)',
-                  border: '0.5px solid rgba(255,255,255,0.7)',
-                  borderRadius: '14px',
-                }}
-              >
-                {char}
-              </Box>
-            ))}
-          </Box>
-        </GlassCard>
+        <RoomCodeShare code={code} />
 
         <ParticipantList
           participants={room.participants}

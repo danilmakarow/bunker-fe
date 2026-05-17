@@ -1,6 +1,6 @@
 'use client';
 
-import { use, useEffect, useMemo, useRef, useState } from 'react';
+import { use, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useQueryClient } from '@tanstack/react-query';
@@ -13,12 +13,14 @@ import { confirm, alertModal } from '@/lib/modal/modal-store';
 import { notify } from '@/lib/notify';
 import { ApiError } from '@/lib/api/api-error';
 import { errorMessageKey } from '@/lib/api/error-message';
-import { polarityColor } from '@/lib/game/attributes';
+import { BIOLOGY_AXES, polarityColor } from '@/lib/game/attributes';
 import { useGame } from '@/lib/query/use-game';
 import { useMe } from '@/lib/query/use-me';
 import { useLeaveRoom } from '@/lib/query/use-leave-room';
 import { useFinishRoom } from '@/lib/query/use-finish-room';
+import { useReveal } from '@/lib/query/use-reveal';
 import { queryKeys } from '@/lib/query/keys';
+import type { AttributeKind } from '@/lib/api/types';
 
 interface GamePageProps {
   params: Promise<{ code: string }>;
@@ -56,9 +58,12 @@ const GamePage = ({ params }: GamePageProps) => {
 
   const leaveRoom = useLeaveRoom(code);
   const finishRoom = useFinishRoom(code);
+  const reveal = useReveal(code);
 
   const wasJoinedRef = useRef(false);
   const exitHandledRef = useRef(false);
+  const [pendingSlotKey, setPendingSlotKey] = useState<string | null>(null);
+  const [kickedUserIds, setKickedUserIds] = useState<Set<string>>(() => new Set());
 
   useEffect(() => {
     if (meLoading) return;
@@ -173,6 +178,75 @@ const GamePage = ({ params }: GamePageProps) => {
     // Status-transition effect will pick up FINISHED and handle redirect.
   };
 
+  const handleKickFromView = useCallback(
+    async (userId: string, name: string) => {
+      const ok = await confirm({
+        title: t('uiKickConfirm', { name }),
+        message: t('uiKickConfirmHint'),
+        confirmLabel: t('uiKick'),
+        confirmColor: 'error',
+      });
+      if (!ok) return;
+      setKickedUserIds((previous) => {
+        const next = new Set(previous);
+        next.add(userId);
+        return next;
+      });
+    },
+    [t],
+  );
+
+  const handleRestoreToView = useCallback((userId: string) => {
+    setKickedUserIds((previous) => {
+      if (!previous.has(userId)) return previous;
+      const next = new Set(previous);
+      next.delete(userId);
+      return next;
+    });
+  }, []);
+
+  /**
+   * Tap handler for an unrevealed slot on the local player's card.
+   * Shows the bottom-sheet confirm, then POSTs the reveal. Suppresses
+   * concurrent calls on the same slot via {@link pendingSlotKey}.
+   *
+   * The synthetic `'BIOLOGY'` kind is fanned out into five individual
+   * mutations (one per biology axis) — the UI shows biology as a single
+   * combined slot, but the BE still tracks each axis independently. The
+   * five calls run sequentially so the final snapshot lands with all five
+   * axes public, avoiding a brief flash of a partial reveal.
+   */
+  const handleRevealSlot = useCallback(
+    async (kind: AttributeKind | 'BIOLOGY', traitId?: string) => {
+      const slotKey = `${kind}:${traitId ?? ''}`;
+      if (pendingSlotKey === slotKey) return;
+
+      const ok = await confirm({
+        title: t('revealConfirm', { kind: t(`kind.${kind}`) }),
+        message: t('revealConfirmHint'),
+        confirmLabel: t('reveal'),
+        confirmColor: 'primary',
+      });
+      if (!ok) return;
+
+      setPendingSlotKey(slotKey);
+      try {
+        if (kind === 'BIOLOGY') {
+          for (const axis of BIOLOGY_AXES) {
+            await reveal.mutateAsync({ attribute: axis });
+          }
+        } else {
+          await reveal.mutateAsync({ attribute: kind, traitId });
+        }
+      } catch (error) {
+        notify.error(tErrors(errorMessageKey(error)));
+      } finally {
+        setPendingSlotKey(null);
+      }
+    },
+    [pendingSlotKey, reveal, t, tErrors],
+  );
+
   if (isLoading && !game) {
     return (
       <PageShell appBar={{ title: t('title', { code }) }}>
@@ -269,6 +343,8 @@ const GamePage = ({ params }: GamePageProps) => {
             character={game.myCharacter}
             isAdmin={amIAdmin}
             isSelf
+            onRevealSlot={handleRevealSlot}
+            pendingSlotKey={pendingSlotKey}
           />
         </Box>
 
@@ -278,23 +354,24 @@ const GamePage = ({ params }: GamePageProps) => {
               {t('section.others')} ({otherPlayers.length})
             </GlassLabel>
             <Stack spacing={1.5}>
-              {otherPlayers.map((player) => (
-                <PlayerCard key={player.userId} variant="other" player={player} />
-              ))}
+              {otherPlayers.map((player) => {
+                const isKicked = kickedUserIds.has(player.userId);
+                return (
+                  <PlayerCard
+                    key={player.userId}
+                    variant="other"
+                    player={player}
+                    isKicked={isKicked}
+                    onKick={() => handleKickFromView(player.userId, player.name)}
+                    onRestore={() => handleRestoreToView(player.userId)}
+                    kickLabel={t('uiKick')}
+                    restoreLabel={t('uiKickRestore')}
+                  />
+                );
+              })}
             </Stack>
           </Box>
         )}
-
-        <Typography
-          sx={{
-            fontSize: '0.72rem',
-            color: 'rgba(0,0,0,0.4)',
-            textAlign: 'center',
-            fontStyle: 'italic',
-          }}
-        >
-          {t('comingSoonNote')}
-        </Typography>
       </Stack>
     </PageShell>
   );

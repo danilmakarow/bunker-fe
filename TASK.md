@@ -221,9 +221,9 @@ Confirm dialogs (kick, leave, reveal, exit) are not separate components — they
 
 ### Still open
 
-1. **Room code sharing** — copy code, copy full link, or both? Recommendation: both, with copy-link as the primary action.
-2. **Multiple slots of one kind on others' cards** (e.g. two action cards) — show two distinct locked slots from the start, or one collapsible slot? Recommendation: distinct slots — their existence isn't a spoiler.
-3. **Reconnect into a `FINISHED` room** — show the read-only post-mortem (assuming BE returns it) or a "цю гру завершено" screen? Recommendation: post-mortem if BE keeps returning data.
+1. ~~Room code sharing~~ — **resolved in M6:** both. Primary is "Поділитися посиланням" (native share sheet via `navigator.share()`, clipboard fallback); secondary is "Скопіювати код". See [`<RoomCodeShare>`](src/components/room-code-share.tsx).
+2. ~~Multiple slots of one kind on others' cards~~ — **resolved in M4:** distinct slots from the start. The grid renders `ALL_SLOTS` (15 entries) including both ACTION_CARD instances; revealed entries flip in place via `otherSlotReveal()`.
+3. **Reconnect into a `FINISHED` room** — show the read-only post-mortem (assuming BE returns it) or a "цю гру завершено" screen? Recommendation: post-mortem if BE keeps returning data. **Pending BE decision** — current FE handles the 409 envelope with a toast + bounce.
 
 ## 11. Milestones
 
@@ -253,12 +253,51 @@ Confirm dialogs (kick, leave, reveal, exit) are not separate components — they
    - **Error translation:** [`errorMessageKey()`](src/lib/api/error-message.ts) maps `ApiError` status/text to a key in `messages/uk.json` (`errors.roomNotFound`, `roomFull`, `roomNotInLobby`, etc.). The BE's English `errorMessage` is never shown to users.
    - **Verified end-to-end against the running BE** (unauth probes correctly 401 with envelope; FE proxy forwards properly; typecheck + build clean).
    - **BE gap:** `POST /rooms/:code/start` is not yet implemented on the BE — `useStartGame` will currently 404 until BE M4 lands. The UI is fully wired and Start is disabled below 4 JOINED players anyway, so users won't hit it accidentally.
-4. **M4 — Game screen scaffolding (1 day)**
-   Game snapshot, my card, other players' grid, locked slots. No reveal yet. GameTopBar slots into AppBar's `trailing` slot for the apocalypse/shelter pills.
-5. **M5 — Reveals (0.5–1 day)**
-   Confirm dialog (via global `confirm()`) + mutation + poll-driven updates.
-6. **M6 — Polish (1 day)**
-   Loading states, errors in Ukrainian, "copy code" affordance, refine reveal animations. (Mobile layout pass and tab-hidden polling already done in M1.)
+4. **M4 — Game screen scaffolding ✅ (shipped 2026-05-17)**
+   - **Game types** updated to match the BE DTOs ([`src/lib/api/types.ts`](src/lib/api/types.ts)): `BiologyValue`, `Trait` with `polarity`, `Apocalypse` with `populationRemainderUk`, structured `Shelter` (area/location/duration/equipment/supplies, no `nameUk`), `MyCharacter`, `GamePlayer`, full `GameSnapshot`.
+   - **Attribute config** in [`src/lib/game/attributes.ts`](src/lib/game/attributes.ts) — biology axes, per-kind trait counts mirroring BE's `TRAIT_DRAW_COUNTS`, canonical `ALL_SLOTS` order (5 biology + 7 single-trait + 2 ACTION_CARD + 1 CONDITION_CARD = 15 slots), `polarityColor()` for the iOS-palette accents.
+   - **New components:**
+     - [`<AttributeIcon>`](src/components/attribute-icon.tsx) — lucide icon per attribute kind (Calendar / Scale / HeartPulse / Briefcase / Backpack / Zap / etc).
+     - [`<RevealSlot>`](src/components/reveal-slot.tsx) — `variant: 'locked' | 'revealed'` × `compact` for the grid-tile shape on others' cards. Polarity drives the left-border accent on revealed rows.
+     - [`<PlayerCard>`](src/components/player-card.tsx) — `variant: 'mine'` (full reveal: header + 5 biology rows + every drawn trait in display order) vs `variant: 'other'` (header + 5×3 grid of locked tiles). Multi-slot kinds expanded into distinct slots per §10 open #2's recommendation.
+     - [`<InfoSheet>`](src/components/info-sheet.tsx) — read-only bottom-sheet (phone) / centered card (tablet+) for rich content, separate from action-focused `LiquidModal`.
+     - [`<GameTopBar>`](src/components/game-top-bar.tsx) — rendered in `AppBar.trailing`. Single info button opens `<InfoSheet>` with apocalypse + shelter details, polarity chips, and structured rows.
+   - **`/game/[code]` rewritten** as a state machine over the 1 Hz `useGame()` poll, mirroring the lobby's structure:
+     - Scenario card at the top of content (always-visible apocalypse name + populationRemainder + polarity dot); deep-dive via the `<GameTopBar>` info button in the AppBar trailing slot.
+     - My-card section (full reveal of all 5 biology + every drawn trait).
+     - Others section (one stacked card per JOINED non-self player; M5 will fold revealed attributes into the locked grid).
+     - **Sticky footer:** Exit (always) + Finish (admin only). Both go through bottom-sheet `confirm()`.
+     - **Status transitions:** `LOBBY` → `/room/[code]` (race fallback); `ABANDONED` → toast + `/home`; `FINISHED` → `alertModal("Гру завершено") → /home`. The BE returns 409 on snapshot for non-IN_GAME rooms, so we also handle that case (toast → `/room/[code]` if the room dropped back to lobby).
+     - **Kicked detection** mirrors the lobby (`wasJoinedRef` + 403 → "kicked" sheet); deep-link auth guard via `useMe()` resolves to `null` → `/`.
+   - **`useStartGame` is now live end-to-end** — the BE shipped `POST /rooms/:code/start` as part of its M4 work, so the lobby's Start button works once 4 players have joined.
+   - **Verified:** clean typecheck + build; `/game/ABCD` returns 200; BE start + game endpoints respond through the FE proxy with the proper unauth envelope.
+   - **Out of scope for M4 (deferred to M5):** reveal interaction (`useReveal` mutation + own-card tap-to-confirm), per-slot revealed value rendering on others' cards.
+5. **M5 — Reveals ✅ (shipped 2026-05-17)**
+   - **Types:** `GamePlayer.reveals: RevealedAttribute[]` ([`src/lib/api/types.ts`](src/lib/api/types.ts)). `RevealedAttribute = { attribute, biologyValue, trait, revealedAt }` with exactly one of biologyValue/trait set, mirroring the BE wire format. Same shape on every player including self, so "have I revealed this publicly?" is one lookup.
+   - **Mutation:** [`useReveal(code)`](src/lib/query/use-reveal.ts) → `POST /rooms/:code/game/reveal` with `{ attribute, traitId? }`. BE returns the freshly updated snapshot; we seed the game cache directly so the slot flips locally without waiting for the next 1 Hz poll. Idempotent on the BE side.
+   - **Slot helpers** ([`src/lib/game/attributes.ts`](src/lib/game/attributes.ts)): `revealsOfKind()` and `otherSlotReveal()` for positional matching of multi-slot kinds (ACTION_CARD instance #0 takes the first revealed entry, instance #1 the second).
+   - **RevealSlot** ([`src/components/reveal-slot.tsx`](src/components/reveal-slot.tsx)) now has three variants:
+     - `'locked'` — other player, not revealed (compact tile in the grid, or row form).
+     - `'revealed'` — anyone, publicly revealed. Small badge with eye icon; polarity-coloured accent. Compact tile shows the value text on others' grids.
+     - `'private'` — own card, value visible only to self. Renders the value with a lock badge + "Приватно" tag; tappable when `onReveal` is provided, with a chevron + "Натисни, щоб розкрити для всіх" affordance. `busy` prop suppresses double-fire during the mutation.
+   - **PlayerCard** ([`src/components/player-card.tsx`](src/components/player-card.tsx)):
+     - `variant: 'mine'` accepts `onRevealSlot(kind, traitId?)` + `pendingSlotKey`. For each slot it computes `isAttributeRevealed()` against `player.reveals` (using `traitId` for ACTION_CARD instances), and renders either `'revealed'` or `'private'` accordingly. Header shows a "Розкрито N з 15" caption.
+     - `variant: 'other'` consumes `player.reveals` via `otherSlotReveal()` — matching tiles flip to compact-revealed shape with the value; the rest stay locked placeholders. Header gets a "Розкрито N з 15" caption when any reveals exist.
+   - **Game page** ([`src/app/game/[code]/page.tsx`](src/app/game/[code]/page.tsx)) ships `handleRevealSlot(kind, traitId?)` — bottom-sheet `confirm()` with the kind-specific title ("Розкрити Здоров’я?"), then mutation. `pendingSlotKey` ref-locks the same slot from double-firing; failures surface a translated toast. Removed the M4 placeholder "coming soon" note now that reveals are live.
+   - **i18n:** [`messages/uk.json`](messages/uk.json) gained `game.{reveal,revealing,revealConfirm,revealConfirmHint,revealedSummary,slot.{private,public,tapToReveal}}`.
+   - **Verified:** clean typecheck + build; `/game/ABCD` 200; BE `POST /api/rooms/ABCD/game/reveal` reachable through the FE proxy with the expected 401 envelope when unauth. Real reveal round-trip is a manual test (logged in → admin starts game → tap own slot → confirm → other clients see the reveal within 1 s).
+   - **Out of scope for M5 (deferred to M6 polish):** reveal animation beyond the existing transition, optimistic UI for the slot flip, hint when tapping another player's locked tile.
+6. **M6 — Polish ✅ (shipped 2026-05-17)**
+   - **Share affordance** ([`src/components/room-code-share.tsx`](src/components/room-code-share.tsx)) — replaces the lobby's plain code tile with: the same 4-tile display + a hint line + a "Поділитися посиланням" primary button (Share2 icon) and a "Скопіювати код" secondary button (Copy icon). Share uses the native `navigator.share()` sheet on mobile when available (most iOS/Android browsers); otherwise falls back to `navigator.clipboard.writeText` and finally a hidden-textarea + `execCommand('copy')` for older browsers. AbortError from a dismissed share sheet is treated as a no-op. Toast feedback on copy success/failure (`room.linkCopied` / `room.codeCopied` / `room.copyFailed`).
+   - **Locked-slot tap hint** ([`src/components/reveal-slot.tsx`](src/components/reveal-slot.tsx) `locked` compact + [`src/components/player-card.tsx`](src/components/player-card.tsx) `other`) — tapping any locked tile on another player's grid surfaces `notify.info("Гравець ще не розкрив це поле")`. Closes M5's deferred "hint when tapping locked tile" item.
+   - **Reveal animation** — when a slot transitions to revealed:
+     - Compact tile (other players' grid): `revealAppear` keyframe — opacity 0 → 1 with a `scale(0.92) → 1.04 → 1` overshoot, 360 ms ease-out. Card-flip feel without the 3D rotation cost.
+     - Row form (own card): `revealAppearRow` keyframe — opacity 0 + translateY(-4px) → settled, 260 ms ease-out. Subtler since the player just confirmed the action.
+     - Triggered via `key` changes in [`<PlayerCard>`](src/components/player-card.tsx) that include the revealed flag (`-r` / `-p` / `-l`), so React remounts only the affected slot subtree on transition; same-state polls don't replay the animation. On initial page load, already-revealed slots play once — acts as a soft "this is the current state" reveal.
+   - **i18n** ([`messages/uk.json`](messages/uk.json)): added `room.{shareHint, shareLink, copyLink, copyCode, linkCopied, codeCopied, copyFailed}` and `game.lockedHint`.
+   - **Loading / error sweep:** existing patterns (room/game `<GlassSpinner /> + loading caption`, button `loading` prop, inline form errors, translated toasts via `errorMessageKey()`) already cover every entry point — no copy gaps surfaced. Earlier milestones already mapped every BE error envelope to a Ukrainian key.
+   - **Verified:** clean `pnpm typecheck` + `pnpm build`; all four authenticated routes return their expected status (`/room/ABCD` 200, `/game/ABCD` 200, `/join` 200, `/home` 307 → `/` without a cookie); curl smoke confirms the share strings render in the lobby HTML.
+   - **Out of scope (intentionally):** true optimistic UI for the slot flip (the BE returns the snapshot in <100 ms and the cache-seed in `useReveal.onSuccess` is effectively optimistic — adding pre-request optimism would require rollback complexity for marginal gain); 3D card-flip animation (heavier and less consistent on mid-range Android); FINISHED post-mortem reconnect (still pending the BE-side decision in §10 #3).
 
 ## 12. Explicitly out of scope for v1
 

@@ -96,6 +96,18 @@ export interface MyCharacter {
   traits: Trait[];
 }
 
+/**
+ * One publicly revealed slot on any player's card. Exactly one of
+ * `biologyValue` / `trait` is set, mirroring the BE's `RevealedAttribute`
+ * DTO. Reveals are global — every player in the room sees the same shape.
+ */
+export interface RevealedAttribute {
+  attribute: AttributeKind;
+  biologyValue: BiologyValue | null;
+  trait: Trait | null;
+  revealedAt: string;
+}
+
 export interface GamePlayer {
   userId: string;
   seatNumber: number;
@@ -103,6 +115,12 @@ export interface GamePlayer {
   avatarUrl: string | null;
   isAdmin: boolean;
   status: ParticipantStatus;
+  /**
+   * Publicly revealed slots. Order is BE-determined (`revealedAt` ASC).
+   * The same shape appears on every player entry, including the caller's,
+   * so the FE can derive "is this slot public" for my own card too.
+   */
+  reveals: RevealedAttribute[];
 }
 
 export interface GameSnapshot {

@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { X } from 'lucide-react';
 import { glass, safeArea } from '@/theme/tokens';
@@ -19,10 +20,21 @@ interface InfoSheetProps {
  * Separate from LiquidModal — that component is action-focused (confirm /
  * cancel buttons); InfoSheet is a read-only details surface with a close
  * affordance and unconstrained body content.
+ *
+ * Rendered through a portal anchored at `document.body` so the sheet's
+ * `position: fixed` is resolved against the viewport rather than the
+ * AppBar's containing block (the AppBar has `backdrop-filter`, which on
+ * WebKit promotes itself to a containing block for fixed descendants and
+ * would otherwise trap the sheet inside the header strip).
  */
 const InfoSheet = ({ open, title, onClose, children }: InfoSheetProps) => {
   const theme = useTheme();
   const isPhone = useMediaQuery(theme.breakpoints.down('sm'));
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -33,7 +45,7 @@ const InfoSheet = ({ open, title, onClose, children }: InfoSheetProps) => {
     return () => window.removeEventListener('keydown', handleKey);
   }, [open, onClose]);
 
-  if (!open) return null;
+  if (!open || !mounted) return null;
 
   const sheetContainerSx = isPhone
     ? {
@@ -70,7 +82,7 @@ const InfoSheet = ({ open, title, onClose, children }: InfoSheetProps) => {
         },
       };
 
-  return (
+  const overlay = (
     <Box
       onClick={onClose}
       sx={{
@@ -166,6 +178,8 @@ const InfoSheet = ({ open, title, onClose, children }: InfoSheetProps) => {
       </Box>
     </Box>
   );
+
+  return createPortal(overlay, document.body);
 };
 
 export default InfoSheet;

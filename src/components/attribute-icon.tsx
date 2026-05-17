@@ -9,6 +9,7 @@ import {
   Calendar,
   Compass,
   HeartPulse,
+  IdCard,
   Palette,
   Scale,
   Skull,
@@ -18,12 +19,15 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import type { AttributeKind } from '@/lib/api/types';
+import { BIOLOGY_SLOT_KIND, type SlotKind } from '@/lib/game/attributes';
 
 /**
  * Single source of truth for the icon associated with each attribute kind.
- * Used by RevealSlot, PlayerCard headers, and the GameTopBar legend.
+ * Includes the synthetic `BIOLOGY` slot used by the player card to render
+ * the five biology axes as one combined slot.
  */
-const ICON_BY_KIND: Record<AttributeKind, LucideIcon> = {
+const ICON_BY_KIND: Record<SlotKind | AttributeKind, LucideIcon> = {
+  [BIOLOGY_SLOT_KIND]: IdCard,
   AGE: Calendar,
   WEIGHT: Scale,
   SEX: User,
@@ -41,13 +45,13 @@ const ICON_BY_KIND: Record<AttributeKind, LucideIcon> = {
 };
 
 interface AttributeIconProps {
-  kind: AttributeKind;
+  kind: SlotKind | AttributeKind;
   size?: number;
   color?: string;
   strokeWidth?: number;
 }
 
-/** lucide-react icon picker for an attribute kind. */
+/** lucide-react icon picker for an attribute or synthetic slot kind. */
 const AttributeIcon = ({ kind, size = 18, color, strokeWidth = 2 }: AttributeIconProps) => {
   const Icon = ICON_BY_KIND[kind];
   return <Icon size={size} color={color} strokeWidth={strokeWidth} />;
