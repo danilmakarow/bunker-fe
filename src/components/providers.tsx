@@ -7,7 +7,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { NextIntlClientProvider, type AbstractIntlMessages } from 'next-intl';
 import { bunkerTheme } from '@/theme/theme';
-import { createQueryClient } from '@/lib/query/query-client';
+import { createQueryClient } from '@/infrastructure/query/query-client';
 import ModalRoot from './modal-root';
 import Toaster from './toaster';
 

@@ -3,7 +3,7 @@
 import { useState, useEffect, type ReactNode } from 'react';
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { GlassInput, GlassFieldGroup } from './glass';
-import type { ConfirmColor } from '@/lib/modal/types';
+import type { ConfirmColor } from '@/components/modal/types';
 import { glass, layout, safeArea } from '@/theme/tokens';
 
 interface LiquidModalProps {

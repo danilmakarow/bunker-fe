@@ -5,7 +5,7 @@ import { Box, Stack, Typography } from '@mui/material';
 import { Copy, Share2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { GlassButton, GlassCard, GlassLabel } from './glass';
-import { notify } from '@/lib/notify';
+import { notify } from '@/components/notify';
 
 interface RoomCodeShareProps {
   code: string;

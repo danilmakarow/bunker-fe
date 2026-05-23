@@ -2,7 +2,7 @@
 
 import { Avatar, Box, Typography } from '@mui/material';
 import { Crown, X } from 'lucide-react';
-import type { Participant } from '@/lib/api/types';
+import type { Participant } from '@/entities';
 import { GlassIconButton } from './glass';
 import { glass } from '@/theme/tokens';
 

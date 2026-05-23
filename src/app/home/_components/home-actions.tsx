@@ -3,11 +3,15 @@
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { GlassButton } from '@/components/glass';
-import { notify } from '@/lib/notify';
-import { confirm } from '@/lib/modal/modal-store';
-import { useCreateRoom } from '@/lib/query/use-create-room';
-import { useLogout } from '@/lib/query/use-logout';
-import { errorMessageKey } from '@/lib/api/error-message';
+import { notify } from '@/components/notify';
+import { confirm } from '@/components/modal/modal-store';
+import { useCreateRoom } from '@/use-cases/use-create-room';
+import { useLogout } from '@/use-cases/use-logout';
+import { errorMessageKey } from '@/adapters/error-message';
+
+interface HomeActionsProps {
+  isAdmin: boolean;
+}
 
 /**
  * Sticky-footer CTAs for the home page.
@@ -15,7 +19,7 @@ import { errorMessageKey } from '@/lib/api/error-message';
  * - Create: POST /rooms → seed snapshot cache → push to /room/[code].
  * - Join:   client navigation to /join (PIN form lives there).
  */
-const HomeActions = () => {
+const HomeActions = ({ isAdmin }: HomeActionsProps) => {
   const router = useRouter();
   const t = useTranslations('home');
   const tErrors = useTranslations('errors');
@@ -34,6 +38,10 @@ const HomeActions = () => {
     router.push('/join');
   };
 
+  const handleBackoffice = () => {
+    router.push('/backoffice');
+  };
+
   return (
     <>
       <GlassButton
@@ -47,6 +55,15 @@ const HomeActions = () => {
       <GlassButton glassVariant="secondary" sx={{ py: 1.3 }} onClick={handleJoin}>
         {t('joinRoom')}
       </GlassButton>
+      {isAdmin && (
+        <GlassButton
+          glassVariant="ghost"
+          sx={{ py: 1.1, fontSize: '0.9rem' }}
+          onClick={handleBackoffice}
+        >
+          {t('backoffice')}
+        </GlassButton>
+      )}
     </>
   );
 };
@@ -76,7 +93,7 @@ export const HomeLogoutButton = () => {
       return;
     }
 
-    router.replace('/');
+    router.replace('/start');
     router.refresh();
   };
 

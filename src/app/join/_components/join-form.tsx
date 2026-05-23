@@ -7,9 +7,9 @@ import { Box, Stack, Typography } from '@mui/material';
 import PageShell from '@/components/page-shell';
 import { GlassButton } from '@/components/glass';
 import CodeInput from '@/components/code-input';
-import { useJoinRoom } from '@/lib/query/use-join-room';
-import { notify } from '@/lib/notify';
-import { errorMessageKey } from '@/lib/api/error-message';
+import { useJoinRoom } from '@/use-cases/use-join-room';
+import { notify } from '@/components/notify';
+import { errorMessageKey } from '@/adapters/error-message';
 
 const ROOM_CODE_LENGTH = 4;
 

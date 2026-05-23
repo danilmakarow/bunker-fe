@@ -9,18 +9,19 @@ import PageShell from '@/components/page-shell';
 import GameTopBar from '@/components/game-top-bar';
 import PlayerCard from '@/components/player-card';
 import { GlassButton, GlassCard, GlassLabel, GlassSpinner } from '@/components/glass';
-import { confirm, alertModal } from '@/lib/modal/modal-store';
-import { notify } from '@/lib/notify';
-import { ApiError } from '@/lib/api/api-error';
-import { errorMessageKey } from '@/lib/api/error-message';
-import { BIOLOGY_AXES, polarityColor } from '@/lib/game/attributes';
-import { useGame } from '@/lib/query/use-game';
-import { useMe } from '@/lib/query/use-me';
-import { useLeaveRoom } from '@/lib/query/use-leave-room';
-import { useFinishRoom } from '@/lib/query/use-finish-room';
-import { useReveal } from '@/lib/query/use-reveal';
-import { queryKeys } from '@/lib/query/keys';
-import type { AttributeKind } from '@/lib/api/types';
+import { confirm, alertModal } from '@/components/modal/modal-store';
+import { notify } from '@/components/notify';
+import { ApiError } from '@/infrastructure/http/api-error';
+import { errorMessageKey } from '@/adapters/error-message';
+import { BIOLOGY_AXES } from '@/entities/attributes';
+import { polarityColor } from '@/theme/polarity';
+import { useGame } from '@/use-cases/use-game';
+import { useMe } from '@/use-cases/use-me';
+import { useLeaveRoom } from '@/use-cases/use-leave-room';
+import { useFinishRoom } from '@/use-cases/use-finish-room';
+import { useReveal } from '@/use-cases/use-reveal';
+import { queryKeys } from '@/use-cases/query-keys';
+import type { AttributeKind } from '@/entities';
 
 interface GamePageProps {
   params: Promise<{ code: string }>;
@@ -67,7 +68,7 @@ const GamePage = ({ params }: GamePageProps) => {
 
   useEffect(() => {
     if (meLoading) return;
-    if (me === null) router.replace('/');
+    if (me === null) router.replace('/start');
   }, [me, meLoading, router]);
 
   // Once we receive a snapshot we know we were JOINED; this distinguishes

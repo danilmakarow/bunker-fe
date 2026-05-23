@@ -15,6 +15,7 @@ import {
   type TypographyProps,
   type CheckboxProps,
   type FormControlLabelProps,
+  type TextFieldProps,
 } from '@mui/material';
 import UnfoldMoreRoundedIcon from '@mui/icons-material/UnfoldMoreRounded';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
@@ -188,18 +189,20 @@ GlassInput.displayName = 'GlassInput';
  *  GlassTextInput — traditional centered input
  *  (for modals, search bars, standalone fields)
  * ───────────────────────────────────────────── */
-interface GlassTextInputProps {
-  label?: string;
-  value?: string;
-  placeholder?: string;
-  autoFocus?: boolean;
-  onChange?: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  onKeyDown?: (event: KeyboardEvent<HTMLDivElement>) => void;
-}
+/**
+ * Forwards every TextField prop except those we hard-code internally
+ * (`variant`, `size`, `fullWidth`, `ref`). Callers can pass `multiline`,
+ * `type`, `slotProps`, `sx`, etc. without the primitive needing to know
+ * about them ahead of time.
+ */
+type GlassTextInputProps = Omit<
+  TextFieldProps,
+  'variant' | 'size' | 'fullWidth' | 'ref'
+>;
 
 /** Traditional centered MUI text input styled to match the glass aesthetic. */
 export const GlassTextInput = forwardRef<HTMLDivElement, GlassTextInputProps>(
-  ({ label, ...rest }, ref) => (
+  ({ label, sx: sxProp, ...rest }, ref) => (
     <TextField
       ref={ref}
       fullWidth
@@ -229,6 +232,7 @@ export const GlassTextInput = forwardRef<HTMLDivElement, GlassTextInputProps>(
           color: 'rgba(0,0,0,0.48)',
           '&.Mui-focused': { color: 'rgba(0,122,255,0.85)' },
         },
+        ...sxProp,
       }}
       {...rest}
     />

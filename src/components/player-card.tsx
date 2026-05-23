@@ -11,7 +11,7 @@ import type {
   RevealedAttribute,
   Trait,
   TraitKind,
-} from '@/lib/api/types';
+} from '@/entities';
 import {
   ALL_SLOTS,
   BIOLOGY_AXES,
@@ -22,8 +22,8 @@ import {
   formatBiologySummaryFromReveals,
   isBiologyFullyRevealed,
   otherSlotReveal,
-} from '@/lib/game/attributes';
-import { notify } from '@/lib/notify';
+} from '@/entities/attributes';
+import { notify } from '@/components/notify';
 import { GlassCard, GlassIconButton, GlassLabel } from './glass';
 import RevealSlot from './reveal-slot';
 import { glass } from '@/theme/tokens';

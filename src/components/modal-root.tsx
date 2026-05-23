@@ -2,12 +2,12 @@
 
 import { useTranslations } from 'next-intl';
 import LiquidModal from './liquid-modal';
-import { useModalStore } from '@/lib/modal/modal-store';
+import { useModalStore } from '@/components/modal/modal-store';
 import type {
   AlertOptions,
   ConfirmOptions,
   PromptOptions,
-} from '@/lib/modal/types';
+} from '@/components/modal/types';
 
 interface ConfirmModalProps {
   options: ConfirmOptions;

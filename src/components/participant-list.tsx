@@ -1,7 +1,7 @@
 'use client';
 
 import { Box } from '@mui/material';
-import type { Participant } from '@/lib/api/types';
+import type { Participant } from '@/entities';
 import { GlassFieldGroup, GlassLabel } from './glass';
 import ParticipantRow from './participant-row';
 

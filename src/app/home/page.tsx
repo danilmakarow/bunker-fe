@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 import { Avatar, Box, Stack, Typography } from '@mui/material';
 import { getTranslations } from 'next-intl/server';
 import PageShell from '@/components/page-shell';
-import { getCurrentUser } from '@/lib/api/auth';
+import { getCurrentUser } from '@/use-cases/get-current-user';
 import HomeActions, { HomeLogoutButton } from './_components/home-actions';
 
 /**
@@ -15,7 +15,7 @@ import HomeActions, { HomeLogoutButton } from './_components/home-actions';
  */
 const HomePage = async () => {
   const user = await getCurrentUser();
-  if (!user) redirect('/');
+  if (!user) redirect('/start');
 
   const t = await getTranslations('home');
   const initial = user.name.charAt(0).toUpperCase();
@@ -23,7 +23,7 @@ const HomePage = async () => {
   return (
     <PageShell
       appBar={{ title: t('title'), trailing: <HomeLogoutButton /> }}
-      footer={<HomeActions />}
+      footer={<HomeActions isAdmin={user.isAdmin} />}
     >
       <Stack spacing={3} sx={{ textAlign: 'center', alignItems: 'center', pt: 4 }}>
         <Avatar

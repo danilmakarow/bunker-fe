@@ -18,8 +18,8 @@ import {
   Zap,
   type LucideIcon,
 } from 'lucide-react';
-import type { AttributeKind } from '@/lib/api/types';
-import { BIOLOGY_SLOT_KIND, type SlotKind } from '@/lib/game/attributes';
+import type { AttributeKind } from '@/entities';
+import { BIOLOGY_SLOT_KIND, type SlotKind } from '@/entities/attributes';
 
 /**
  * Single source of truth for the icon associated with each attribute kind.

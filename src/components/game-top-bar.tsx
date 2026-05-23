@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { Box, Stack, Typography } from '@mui/material';
 import { Info } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import type { Apocalypse, Polarity, Shelter } from '@/lib/api/types';
-import { polarityColor } from '@/lib/game/attributes';
+import type { Apocalypse, Polarity, Shelter } from '@/entities';
+import { polarityColor } from '@/theme/polarity';
 import { GlassIconButton, GlassLabel } from './glass';
 import InfoSheet from './info-sheet';
 

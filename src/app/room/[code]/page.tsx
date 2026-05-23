@@ -9,17 +9,17 @@ import PageShell from '@/components/page-shell';
 import ParticipantList from '@/components/participant-list';
 import RoomCodeShare from '@/components/room-code-share';
 import { GlassButton, GlassSpinner } from '@/components/glass';
-import { confirm, alertModal } from '@/lib/modal/modal-store';
-import { notify } from '@/lib/notify';
-import { ApiError } from '@/lib/api/api-error';
-import { errorMessageKey } from '@/lib/api/error-message';
-import { useRoom } from '@/lib/query/use-room';
-import { useMe } from '@/lib/query/use-me';
-import { useLeaveRoom } from '@/lib/query/use-leave-room';
-import { useKickParticipant } from '@/lib/query/use-kick-participant';
-import { useStartGame } from '@/lib/query/use-start-game';
-import { queryKeys } from '@/lib/query/keys';
-import type { Participant } from '@/lib/api/types';
+import { confirm, alertModal } from '@/components/modal/modal-store';
+import { notify } from '@/components/notify';
+import { ApiError } from '@/infrastructure/http/api-error';
+import { errorMessageKey } from '@/adapters/error-message';
+import { useRoom } from '@/use-cases/use-room';
+import { useMe } from '@/use-cases/use-me';
+import { useLeaveRoom } from '@/use-cases/use-leave-room';
+import { useKickParticipant } from '@/use-cases/use-kick-participant';
+import { useStartGame } from '@/use-cases/use-start-game';
+import { queryKeys } from '@/use-cases/query-keys';
+import type { Participant } from '@/entities';
 
 const ROOM_MIN_PARTICIPANTS_TO_START = 4;
 
@@ -49,7 +49,7 @@ const RoomPage = ({ params }: RoomPageProps) => {
   // Deep-linked unauth users: useMe resolves to null → bounce to landing.
   useEffect(() => {
     if (meLoading) return;
-    if (me === null) router.replace('/');
+    if (me === null) router.replace('/start');
   }, [me, meLoading, router]);
 
   const leaveRoom = useLeaveRoom(code);

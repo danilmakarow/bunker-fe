@@ -4,8 +4,10 @@ import { useState, type MouseEvent, type ReactElement } from 'react';
 import { Box, ClickAwayListener, Tooltip, Typography } from '@mui/material';
 import { ChevronRight, Eye, Lock } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import type { Polarity } from '@/lib/api/types';
-import { kindLabelKey, polarityColor, type SlotKind } from '@/lib/game/attributes';
+import type { Polarity } from '@/entities';
+import type { SlotKind } from '@/entities/attributes';
+import { kindLabelKey } from '@/adapters/attribute-labels';
+import { polarityColor } from '@/theme/polarity';
 import { glass } from '@/theme/tokens';
 import AttributeIcon from './attribute-icon';
 
