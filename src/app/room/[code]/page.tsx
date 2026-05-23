@@ -186,7 +186,7 @@ const RoomPage = ({ params }: RoomPageProps) => {
       <PageShell appBar={{ title: t('title', { code }) }}>
         <Box sx={{ pt: 6, textAlign: 'center' }}>
           <GlassSpinner />
-          <Typography sx={{ mt: 1.5, fontSize: '0.9rem', color: 'rgba(0,0,0,0.55)' }}>
+          <Typography sx={{ mt: 1.5, fontSize: '0.9rem', color: 'rgba(255,255,255,0.55)' }}>
             {t('loading')}
           </Typography>
         </Box>
@@ -218,7 +218,7 @@ const RoomPage = ({ params }: RoomPageProps) => {
             <Typography
               sx={{
                 fontSize: '0.78rem',
-                color: 'rgba(0,0,0,0.55)',
+                color: 'rgba(255,255,255,0.55)',
                 textAlign: 'center',
                 mt: -0.5,
               }}

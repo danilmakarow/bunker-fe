@@ -1,8 +1,7 @@
 import type { ReactNode } from 'react';
-import { Box } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import { layout, safeArea } from '@/theme/tokens';
 import AppBar from './app-bar';
-import StickyActionBar from './sticky-action-bar';
 
 interface AppBarConfig {
   title?: string;
@@ -14,7 +13,7 @@ interface PageShellProps {
   children: ReactNode;
   /** Mount the fixed top app-bar; omit on the landing/login hero. */
   appBar?: AppBarConfig;
-  /** Buttons rendered inside the StickyActionBar (mounted only if provided). */
+  /** Action buttons rendered in normal flow at the bottom of the page (mounted only if provided). */
   footer?: ReactNode;
   /** Centre content vertically — used by landing/login hero. */
   centered?: boolean;
@@ -25,9 +24,12 @@ interface PageShellProps {
 /**
  * Full-bleed mobile-first page shell.
  *
- * Layout: [fixed AppBar?] · [scrollable main] · [fixed StickyActionBar?].
- * The main region reserves padding for whichever chrome is mounted +
- * the device safe areas so content never lands under the notch / home bar.
+ * Layout: [fixed AppBar?] · [scrollable main with optional bottom actions].
+ * The main region reserves top padding for the notch + app-bar. A `footer`
+ * renders its buttons in normal flow, pushed to the bottom of the viewport
+ * but scrolling with the page (not fixed); the bottom safe-area inset keeps
+ * them clear of the home indicator. Without a footer, content runs full-bleed
+ * under the indicator.
  */
 const PageShell = ({
   children,
@@ -40,7 +42,7 @@ const PageShell = ({
   const hasFooter = Boolean(footer);
 
   return (
-    <Box sx={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
       {appBar && <AppBar title={appBar.title} back={appBar.back} trailing={appBar.trailing} />}
 
       <Box
@@ -56,15 +58,20 @@ const PageShell = ({
           pt: hasAppBar
             ? `calc(${safeArea.top} + ${layout.appBarHeight}px + 16px)`
             : `calc(${safeArea.top} + 16px)`,
-          pb: hasFooter
-            ? `calc(${safeArea.bottom} + ${layout.footerReserve}px)`
-            : `calc(${safeArea.bottom} + 16px)`,
+          // With a footer, keep its buttons clear of the home indicator.
+          // Without one, let content run full-bleed under the indicator.
+          pb: hasFooter ? `calc(${safeArea.bottom} + 16px)` : '16px',
+          // py: "0px"
         }}
       >
         <Box sx={{ width: '100%', maxWidth: maxContentWidth }}>{children}</Box>
-      </Box>
 
-      {footer && <StickyActionBar>{footer}</StickyActionBar>}
+        {footer && (
+          <Box sx={{ width: '100%', maxWidth: maxContentWidth, mt: 'auto', pt: 3 }}>
+            <Stack spacing={1}>{footer}</Stack>
+          </Box>
+        )}
+      </Box>
     </Box>
   );
 };

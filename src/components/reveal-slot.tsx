@@ -153,7 +153,7 @@ const RevealSlot = (props: RevealSlotProps) => {
           borderRadius: '12px',
           background: 'rgba(0,0,0,0.04)',
           border: '0.5px solid rgba(0,0,0,0.06)',
-          color: 'rgba(0,0,0,0.4)',
+          color: 'rgba(255,255,255,0.4)',
           p: 0.5,
           fontFamily: 'inherit',
           cursor: tappable ? 'pointer' : 'default',
@@ -183,7 +183,7 @@ const RevealSlot = (props: RevealSlotProps) => {
             fontWeight: 600,
             textTransform: 'uppercase',
             letterSpacing: '0.04em',
-            color: 'rgba(0,0,0,0.4)',
+            color: 'rgba(255,255,255,0.4)',
             textAlign: 'center',
             lineHeight: 1.1,
             mt: 0.25,
@@ -214,7 +214,7 @@ const RevealSlot = (props: RevealSlotProps) => {
           borderRadius: '12px',
           background: 'rgba(255,255,255,0.65)',
           border: `0.5px solid ${accent}`,
-          color: 'rgba(0,0,0,0.85)',
+          color: 'rgba(255,255,255,0.85)',
           p: 0.5,
           transition: glass.transition,
           '@keyframes revealAppear': {
@@ -230,7 +230,7 @@ const RevealSlot = (props: RevealSlotProps) => {
           sx={{
             fontSize: '0.6rem',
             fontWeight: 700,
-            color: 'rgba(0,0,0,0.85)',
+            color: 'rgba(255,255,255,0.85)',
             textAlign: 'center',
             lineHeight: 1.1,
             mt: 0.25,
@@ -357,7 +357,7 @@ const RevealSlot = (props: RevealSlotProps) => {
               fontWeight: 600,
               textTransform: 'uppercase',
               letterSpacing: '0.06em',
-              color: 'rgba(0,0,0,0.45)',
+              color: 'rgba(255,255,255,0.45)',
               lineHeight: 1.2,
             }}
           >
@@ -368,7 +368,7 @@ const RevealSlot = (props: RevealSlotProps) => {
               sx={{
                 fontSize: '0.6rem',
                 fontWeight: 600,
-                color: 'rgba(0,0,0,0.4)',
+                color: 'rgba(255,255,255,0.4)',
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
               }}
@@ -397,7 +397,7 @@ const RevealSlot = (props: RevealSlotProps) => {
               sx={{
                 fontSize: '0.95rem',
                 fontWeight: 600,
-                color: 'rgba(0,0,0,0.88)',
+                color: 'rgba(255,255,255,0.88)',
                 lineHeight: 1.3,
                 mt: 0.25,
               }}
@@ -408,7 +408,7 @@ const RevealSlot = (props: RevealSlotProps) => {
               <Typography
                 sx={{
                   fontSize: '0.8rem',
-                  color: 'rgba(0,0,0,0.55)',
+                  color: 'rgba(255,255,255,0.55)',
                   lineHeight: 1.35,
                   mt: 0.25,
                 }}
@@ -434,7 +434,7 @@ const RevealSlot = (props: RevealSlotProps) => {
             sx={{
               fontSize: '0.85rem',
               fontWeight: 500,
-              color: 'rgba(0,0,0,0.45)',
+              color: 'rgba(255,255,255,0.45)',
               fontStyle: 'italic',
               mt: 0.25,
             }}

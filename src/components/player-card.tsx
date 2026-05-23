@@ -64,7 +64,7 @@ const PlayerCardHeader = ({
         borderRadius: '10px',
         fontSize: '0.78rem',
         fontWeight: 700,
-        color: 'rgba(0,0,0,0.55)',
+        color: 'rgba(255,255,255,0.55)',
         letterSpacing: '0.04em',
       }}
     >
@@ -93,7 +93,7 @@ const PlayerCardHeader = ({
           sx={{
             fontSize: '1rem',
             fontWeight: 600,
-            color: 'rgba(0,0,0,0.88)',
+            color: 'rgba(255,255,255,0.88)',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
@@ -129,7 +129,7 @@ const PlayerCardHeader = ({
         <Typography
           sx={{
             fontSize: '0.72rem',
-            color: 'rgba(0,0,0,0.45)',
+            color: 'rgba(255,255,255,0.45)',
             mt: 0.25,
             letterSpacing: '0.02em',
           }}

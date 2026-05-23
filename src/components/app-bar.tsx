@@ -99,7 +99,7 @@ const AppBar = ({ title, back, trailing }: AppBarProps) => {
           sx={{
             fontSize: '1rem',
             fontWeight: 600,
-            color: 'rgba(0,0,0,0.85)',
+            color: 'rgba(255,255,255,0.85)',
             textAlign: 'center',
             whiteSpace: 'nowrap',
             overflow: 'hidden',

@@ -150,7 +150,7 @@ const CodeInput = forwardRef<CodeInputHandle, CodeInputProps>(
                 fontWeight: 700,
                 fontFamily: 'inherit',
                 letterSpacing: 0,
-                color: 'rgba(0,0,0,0.88)',
+                color: 'rgba(255,255,255,0.88)',
                 background: 'rgba(255,255,255,0.55)',
                 backdropFilter: 'blur(12px)',
                 WebkitBackdropFilter: 'blur(12px)',

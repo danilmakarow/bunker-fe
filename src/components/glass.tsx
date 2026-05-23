@@ -133,7 +133,7 @@ export const GlassInput = forwardRef<HTMLInputElement, GlassInputProps>(
             sx={{
               fontSize: '0.9rem',
               fontWeight: 400,
-              color: 'rgba(0,0,0,0.85)',
+              color: 'rgba(255,255,255,0.85)',
               flexShrink: 0,
               whiteSpace: 'nowrap',
               minWidth: 80,
@@ -157,11 +157,11 @@ export const GlassInput = forwardRef<HTMLInputElement, GlassInputProps>(
             fontFamily: 'inherit',
             fontSize: '0.9rem',
             fontWeight: 400,
-            color: 'rgba(0,0,0,0.7)',
+            color: 'rgba(255,255,255,0.7)',
             textAlign: 'right',
             py: 0,
             px: 0,
-            '&::placeholder': { color: 'rgba(0,0,0,0.22)' },
+            '&::placeholder': { color: 'rgba(255,255,255,0.22)' },
             '&:read-only': { cursor: 'default' },
           }}
           {...rest}
@@ -229,7 +229,7 @@ export const GlassTextInput = forwardRef<HTMLDivElement, GlassTextInputProps>(
         '& .MuiInputLabel-root': {
           fontSize: '0.85rem',
           fontWeight: 500,
-          color: 'rgba(0,0,0,0.48)',
+          color: 'rgba(255,255,255,0.48)',
           '&.Mui-focused': { color: 'rgba(0,122,255,0.85)' },
         },
         ...sxProp,
@@ -296,7 +296,7 @@ export const GlassSelect = ({ label, value, options, onChange }: GlassSelectProp
             sx={{
               fontSize: '0.9rem',
               fontWeight: 400,
-              color: 'rgba(0,0,0,0.85)',
+              color: 'rgba(255,255,255,0.85)',
               flexShrink: 0,
               minWidth: 80,
             }}
@@ -309,12 +309,12 @@ export const GlassSelect = ({ label, value, options, onChange }: GlassSelectProp
           sx={{
             fontSize: '0.9rem',
             fontWeight: 400,
-            color: 'rgba(0,0,0,0.45)',
+            color: 'rgba(255,255,255,0.45)',
           }}
         >
           {selectedOption?.italic ? <em>{displayLabel}</em> : displayLabel}
         </Typography>
-        <UnfoldMoreRoundedIcon sx={{ fontSize: 18, color: 'rgba(0,0,0,0.25)' }} />
+        <UnfoldMoreRoundedIcon sx={{ fontSize: 18, color: 'rgba(255,255,255,0.25)' }} />
       </Box>
 
       <Menu
@@ -353,10 +353,10 @@ export const GlassSelect = ({ label, value, options, onChange }: GlassSelectProp
               display: 'flex',
               justifyContent: 'space-between',
               gap: 2,
-              '&:hover': { bgcolor: 'rgba(0,0,0,0.04)' },
+              '&:hover': { bgcolor: 'rgba(255,255,255,0.04)' },
               '&.Mui-selected': {
                 bgcolor: 'transparent',
-                '&:hover': { bgcolor: 'rgba(0,0,0,0.04)' },
+                '&:hover': { bgcolor: 'rgba(255,255,255,0.04)' },
               },
             }}
           >
@@ -411,7 +411,7 @@ export const GlassButton = ({
     },
     ghost: {
       background: 'transparent',
-      color: 'rgba(0,0,0,0.5)',
+      color: 'rgba(255,255,255,0.5)',
       '&:hover': { background: 'rgba(0,0,0,0.04)' },
     },
   };
@@ -499,7 +499,7 @@ export const GlassLabel = ({ children, sx, ...rest }: TypographyProps) => (
       fontWeight: 600,
       textTransform: 'uppercase',
       letterSpacing: '0.06em',
-      color: 'rgba(0,0,0,0.35)',
+      color: 'rgba(255,255,255,0.35)',
       mb: 1,
       ...sx,
     }}
@@ -528,7 +528,7 @@ export const GlassCheckbox = ({ checked, onChange, label, sx }: GlassCheckboxPro
         onChange={onChange}
         size="small"
         sx={{
-          color: 'rgba(0,0,0,0.25)',
+          color: 'rgba(255,255,255,0.25)',
           '&.Mui-checked': { color: 'rgba(0,122,255,0.8)' },
         }}
       />
@@ -537,7 +537,7 @@ export const GlassCheckbox = ({ checked, onChange, label, sx }: GlassCheckboxPro
     sx={{
       '& .MuiFormControlLabel-label': {
         fontSize: '0.88rem',
-        color: 'rgba(0,0,0,0.6)',
+        color: 'rgba(255,255,255,0.6)',
       },
       ...sx,
     }}

@@ -68,14 +68,14 @@ const LiquidModal = ({
 
   const bodyContent = (
     <Box sx={{ px: 2.5, pt: isPhone ? 1 : 2.5, pb: showInput ? 1.5 : 2.5, textAlign: 'center' }}>
-      <Typography sx={{ fontSize: '1.05rem', fontWeight: 600, mb: 0.5, color: 'rgba(0,0,0,0.85)' }}>
+      <Typography sx={{ fontSize: '1.05rem', fontWeight: 600, mb: 0.5, color: 'rgba(255,255,255,0.85)' }}>
         {title}
       </Typography>
 
       {message && (
         <Typography
           component="div"
-          sx={{ fontSize: '0.88rem', color: 'rgba(0,0,0,0.55)', lineHeight: 1.5 }}
+          sx={{ fontSize: '0.88rem', color: 'rgba(255,255,255,0.55)', lineHeight: 1.5 }}
         >
           {message}
         </Typography>
@@ -111,7 +111,7 @@ const LiquidModal = ({
           display: 'flex',
           alignItems: 'flex-end',
           justifyContent: 'center',
-          bgcolor: 'rgba(0,0,0,0.32)',
+          bgcolor: 'rgba(255,255,255,0.32)',
           backdropFilter: 'blur(8px) saturate(1.2)',
           WebkitBackdropFilter: 'blur(8px) saturate(1.2)',
           animation: 'sheetFadeIn 0.18s ease-out',
@@ -226,7 +226,7 @@ const LiquidModal = ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        bgcolor: 'rgba(0,0,0,0.18)',
+        bgcolor: 'rgba(255,255,255,0.18)',
         backdropFilter: 'blur(30px) saturate(1.4)',
         WebkitBackdropFilter: 'blur(30px) saturate(1.4)',
         animation: 'modalFadeIn 0.18s ease-out',

@@ -4,11 +4,11 @@
  * components stay consistent and tokens can be swapped centrally.
  */
 export const glass = {
-  bg: 'rgba(255,255,255,0.75)',
-  bgHover: 'rgba(255,255,255,0.55)',
-  bgFocus: 'rgba(255,255,255,0.62)',
-  border: 'rgba(255,255,255,0.55)',
-  borderHover: 'rgba(255,255,255,0.75)',
+  bg: 'rgba(0,0,0,0.40)',
+  bgHover: 'rgba(0,0,0,0.50)',
+  bgFocus: 'rgba(0,0,0,0.46)',
+  border: 'rgba(255,255,255,0.20)',
+  borderHover: 'rgba(255,255,255,0.32)',
   blur: 'blur(24px) saturate(1.6)',
   shadow: '0 1px 3px rgba(0,0,0,0.06)',
   shadowLg: '0 8px 32px rgba(0,0,0,0.08)',
@@ -36,13 +36,21 @@ export const bunkerBackgroundBlur = 'blur(28px) saturate(1.1)';
 export const themeColor = '#f3b27a';
 
 /**
+ * Default text colours — light by design, applied app-wide via the theme
+ * palette + CssBaseline so copy reads against the dusky background photo.
+ */
+export const text = {
+  primary: 'rgba(255,255,255,0.95)',
+  secondary: 'rgba(255,255,255,0.72)',
+} as const;
+
+/**
  * Mobile-first layout constants.
  * Centralised so every fixed-chrome component reads the same numbers
  * (AppBar height, sticky-footer reserve, content gutter).
  */
 export const layout = {
   appBarHeight: 56,
-  footerReserve: 96,
   contentGutter: { xs: 2, sm: 3 } as const,
   phoneBreakpoint: 640,
   /** Minimum tap-target side per Apple HIG / WCAG 2.5.5. */

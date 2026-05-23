@@ -91,7 +91,7 @@ const InfoSheet = ({ open, title, onClose, children }: InfoSheetProps) => {
         zIndex: 1300,
         display: 'flex',
         justifyContent: 'center',
-        bgcolor: 'rgba(0,0,0,0.32)',
+        bgcolor: 'rgba(255,255,255,0.32)',
         backdropFilter: 'blur(10px) saturate(1.2)',
         WebkitBackdropFilter: 'blur(10px) saturate(1.2)',
         animation: 'sheetFadeIn 0.18s ease-out',
@@ -144,7 +144,7 @@ const InfoSheet = ({ open, title, onClose, children }: InfoSheetProps) => {
             sx={{
               fontSize: '1.05rem',
               fontWeight: 700,
-              color: 'rgba(0,0,0,0.88)',
+              color: 'rgba(255,255,255,0.88)',
               letterSpacing: '-0.01em',
             }}
           >
@@ -164,7 +164,7 @@ const InfoSheet = ({ open, title, onClose, children }: InfoSheetProps) => {
               borderRadius: '10px',
               border: 'none',
               background: 'rgba(0,0,0,0.05)',
-              color: 'rgba(0,0,0,0.55)',
+              color: 'rgba(255,255,255,0.55)',
               cursor: 'pointer',
               transition: glass.transition,
               '&:active': { background: 'rgba(0,0,0,0.1)' },

@@ -45,7 +45,7 @@ const BackofficePage = async () => {
         <Typography
           sx={{
             fontSize: '0.95rem',
-            color: 'rgba(0,0,0,0.6)',
+            color: 'rgba(255,255,255,0.6)',
             textAlign: 'center',
             px: 2,
           }}
@@ -75,7 +75,7 @@ const BackofficePage = async () => {
                     fontSize: '1.05rem',
                     fontWeight: 700,
                     letterSpacing: '-0.01em',
-                    color: 'rgba(0,0,0,0.88)',
+                    color: 'rgba(255,255,255,0.88)',
                   }}
                 >
                   {t(`sections.${section.labelKey}`)}
@@ -83,7 +83,7 @@ const BackofficePage = async () => {
                 <Box
                   sx={{
                     fontSize: '0.82rem',
-                    color: 'rgba(0,0,0,0.55)',
+                    color: 'rgba(255,255,255,0.55)',
                   }}
                 >
                   {t(`sections.${section.hintKey}`)}

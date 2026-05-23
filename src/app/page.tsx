@@ -40,7 +40,7 @@ const LandingPage = async () => {
         </GlassButton>
       }
     >
-      <Stack spacing={4} sx={{ color: 'rgba(0,0,0,0.85)', pt: 2 }}>
+      <Stack spacing={4} sx={{ color: 'rgba(255,255,255,0.85)', pt: 2 }}>
         <Box sx={{ textAlign: 'center' }}>
           <Typography
             component="h1"
@@ -58,7 +58,7 @@ const LandingPage = async () => {
             sx={{
               fontSize: '1.1rem',
               fontWeight: 500,
-              color: 'rgba(0,0,0,0.7)',
+              color: 'rgba(255,255,255,0.7)',
               letterSpacing: '-0.01em',
             }}
           >
@@ -68,7 +68,7 @@ const LandingPage = async () => {
 
         <GlassCard sx={{ p: 2.25 }}>
           <Typography
-            sx={{ fontSize: '1rem', color: 'rgba(0,0,0,0.72)', lineHeight: 1.6 }}
+            sx={{ fontSize: '1rem', color: 'rgba(255,255,255,0.72)', lineHeight: 1.6 }}
           >
             {t('intro')}
           </Typography>
@@ -102,14 +102,14 @@ const LandingPage = async () => {
                     sx={{
                       fontSize: '1rem',
                       fontWeight: 700,
-                      color: 'rgba(0,0,0,0.88)',
+                      color: 'rgba(255,255,255,0.88)',
                       mb: 0.25,
                     }}
                   >
                     {title}
                   </Typography>
                   <Typography
-                    sx={{ fontSize: '0.9rem', color: 'rgba(0,0,0,0.6)', lineHeight: 1.45 }}
+                    sx={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.45 }}
                   >
                     {text}
                   </Typography>
@@ -122,7 +122,7 @@ const LandingPage = async () => {
         <Typography
           sx={{
             fontSize: '0.85rem',
-            color: 'rgba(0,0,0,0.5)',
+            color: 'rgba(255,255,255,0.5)',
             textAlign: 'center',
             px: 1,
           }}

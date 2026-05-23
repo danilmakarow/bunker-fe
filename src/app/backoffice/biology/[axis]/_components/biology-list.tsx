@@ -128,7 +128,7 @@ const BiologyList = ({ axis }: BiologyListProps) => {
         )}
       </CreateToggle>
 
-      <Typography sx={{ fontSize: '0.85rem', color: 'rgba(0,0,0,0.55)' }}>
+      <Typography sx={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.55)' }}>
         {tCommon('rowsEnabled', {
           enabled: enabledCount,
           total: rows.length,
@@ -137,7 +137,7 @@ const BiologyList = ({ axis }: BiologyListProps) => {
 
       {rows.length === 0 ? (
         <Typography
-          sx={{ fontSize: '0.9rem', color: 'rgba(0,0,0,0.55)', textAlign: 'center' }}
+          sx={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.55)', textAlign: 'center' }}
         >
           {tCommon('empty')}
         </Typography>

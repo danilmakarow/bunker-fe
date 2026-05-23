@@ -11,7 +11,6 @@ import {
   bunkerBackgroundBlur,
   bunkerBackgroundFallback,
   bunkerBackgroundImage,
-  themeColor,
 } from '@/theme/tokens';
 
 export const metadata: Metadata = {
@@ -30,11 +29,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor,
-  // Tells iOS Safari to render its URL bar / scrollbar chrome in dark style,
-  // so the bottom toolbar blends with the dusky bottom of the gradient
-  // instead of falling back to opaque white.
-  colorScheme: 'dark',
+  // No theme-color / color-scheme on purpose. A solid tint can't be an image,
+  // and color-scheme:dark forced an opaque black toolbar over the page. Left
+  // unset, iOS Safari uses its translucent chrome, which frost-samples the
+  // full-bleed background photo (the fixed inset:0 layer) sitting behind it.
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,

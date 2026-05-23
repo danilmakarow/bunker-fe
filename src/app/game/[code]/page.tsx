@@ -253,7 +253,7 @@ const GamePage = ({ params }: GamePageProps) => {
       <PageShell appBar={{ title: t('title', { code }) }}>
         <Box sx={{ pt: 6, textAlign: 'center' }}>
           <GlassSpinner />
-          <Typography sx={{ mt: 1.5, fontSize: '0.9rem', color: 'rgba(0,0,0,0.55)' }}>
+          <Typography sx={{ mt: 1.5, fontSize: '0.9rem', color: 'rgba(255,255,255,0.55)' }}>
             {t('loading')}
           </Typography>
         </Box>
@@ -302,14 +302,14 @@ const GamePage = ({ params }: GamePageProps) => {
             sx={{
               fontSize: '1.4rem',
               fontWeight: 700,
-              color: 'rgba(0,0,0,0.88)',
+              color: 'rgba(255,255,255,0.88)',
               letterSpacing: '-0.01em',
               lineHeight: 1.25,
             }}
           >
             {game.apocalypse.nameUk}
           </Typography>
-          <Typography sx={{ fontSize: '0.88rem', color: 'rgba(0,0,0,0.6)', lineHeight: 1.45 }}>
+          <Typography sx={{ fontSize: '0.88rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.45 }}>
             {game.apocalypse.descriptionUk}
           </Typography>
           <Box
@@ -319,7 +319,7 @@ const GamePage = ({ params }: GamePageProps) => {
               alignItems: 'center',
               gap: 0.75,
               fontSize: '0.78rem',
-              color: 'rgba(0,0,0,0.5)',
+              color: 'rgba(255,255,255,0.5)',
             }}
           >
             <Box

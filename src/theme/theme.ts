@@ -1,6 +1,7 @@
 'use client';
 
 import { createTheme } from '@mui/material';
+import { text } from './tokens';
 
 /**
  * Bunker theme — Apple liquid-glass palette paired with a mobile-first
@@ -15,6 +16,7 @@ export const bunkerTheme = createTheme({
     success: { main: '#34C759' },
     warning: { main: '#FF9500' },
     background: { default: 'transparent' },
+    text: { primary: text.primary, secondary: text.secondary },
   },
   typography: {
     fontFamily:
@@ -30,7 +32,7 @@ export const bunkerTheme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         html: { WebkitTextSizeAdjust: '100%' },
-        body: { overscrollBehaviorY: 'none' },
+        body: { color: text.primary, overscrollBehaviorY: 'none' },
       },
     },
   },

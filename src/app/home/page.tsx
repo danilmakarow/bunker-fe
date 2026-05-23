@@ -49,14 +49,14 @@ const HomePage = async () => {
             sx={{
               fontSize: '1.8rem',
               fontWeight: 700,
-              color: 'rgba(0,0,0,0.88)',
+              color: 'rgba(255,255,255,0.88)',
               letterSpacing: '-0.02em',
               mb: 1,
             }}
           >
             {t('greeting', { name: user.name })}
           </Typography>
-          <Typography sx={{ fontSize: '1rem', color: 'rgba(0,0,0,0.6)', lineHeight: 1.5, px: 1 }}>
+          <Typography sx={{ fontSize: '1rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.5, px: 1 }}>
             {t('subtitle')}
           </Typography>
         </Box>

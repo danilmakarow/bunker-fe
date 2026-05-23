@@ -27,7 +27,7 @@ const InfoRow = ({ label, value }: InfoRowProps) => (
         fontWeight: 600,
         textTransform: 'uppercase',
         letterSpacing: '0.06em',
-        color: 'rgba(0,0,0,0.45)',
+        color: 'rgba(255,255,255,0.45)',
         mb: 0.25,
       }}
     >
@@ -36,7 +36,7 @@ const InfoRow = ({ label, value }: InfoRowProps) => (
     <Typography
       sx={{
         fontSize: '0.95rem',
-        color: 'rgba(0,0,0,0.85)',
+        color: 'rgba(255,255,255,0.85)',
         lineHeight: 1.45,
       }}
     >
@@ -119,7 +119,7 @@ const GameTopBar = ({ apocalypse, shelter }: GameTopBarProps) => {
               sx={{
                 fontSize: '1.25rem',
                 fontWeight: 700,
-                color: 'rgba(0,0,0,0.88)',
+                color: 'rgba(255,255,255,0.88)',
                 letterSpacing: '-0.01em',
                 mb: 0.5,
               }}
@@ -127,7 +127,7 @@ const GameTopBar = ({ apocalypse, shelter }: GameTopBarProps) => {
               {apocalypse.nameUk}
             </Typography>
             <Typography
-              sx={{ fontSize: '0.92rem', color: 'rgba(0,0,0,0.6)', lineHeight: 1.45, mb: 1.5 }}
+              sx={{ fontSize: '0.92rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.45, mb: 1.5 }}
             >
               {apocalypse.descriptionUk}
             </Typography>

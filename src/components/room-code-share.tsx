@@ -98,7 +98,7 @@ const RoomCodeShare = ({ code }: RoomCodeShareProps) => {
               justifyContent: 'center',
               fontSize: '2.2rem',
               fontWeight: 700,
-              color: 'rgba(0,0,0,0.88)',
+              color: 'rgba(255,255,255,0.88)',
               background: 'rgba(255,255,255,0.5)',
               border: '0.5px solid rgba(255,255,255,0.7)',
               borderRadius: '14px',
@@ -112,7 +112,7 @@ const RoomCodeShare = ({ code }: RoomCodeShareProps) => {
         sx={{
           mt: 0.5,
           fontSize: '0.78rem',
-          color: 'rgba(0,0,0,0.5)',
+          color: 'rgba(255,255,255,0.5)',
           textAlign: 'center',
           maxWidth: 260,
           lineHeight: 1.4,

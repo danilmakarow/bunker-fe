@@ -51,7 +51,7 @@ const ParticipantRow = ({
           borderRadius: '10px',
           fontSize: '0.78rem',
           fontWeight: 700,
-          color: 'rgba(0,0,0,0.55)',
+          color: 'rgba(255,255,255,0.55)',
           letterSpacing: '0.04em',
         }}
       >
@@ -79,7 +79,7 @@ const ParticipantRow = ({
           sx={{
             fontSize: '0.95rem',
             fontWeight: 500,
-            color: 'rgba(0,0,0,0.88)',
+            color: 'rgba(255,255,255,0.88)',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',

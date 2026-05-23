@@ -45,7 +45,7 @@ const UsersList = ({ currentUserId }: UsersListProps) => {
 
   return (
     <Stack spacing={2}>
-      <Typography sx={{ fontSize: '0.85rem', color: 'rgba(0,0,0,0.55)' }}>
+      <Typography sx={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.55)' }}>
         {t('common.total', { count: users.length })}
       </Typography>
 
@@ -76,7 +76,7 @@ const UsersList = ({ currentUserId }: UsersListProps) => {
                     sx={{
                       fontSize: '0.95rem',
                       fontWeight: 600,
-                      color: 'rgba(0,0,0,0.88)',
+                      color: 'rgba(255,255,255,0.88)',
                       letterSpacing: '-0.01em',
                       wordBreak: 'break-word',
                     }}
@@ -101,7 +101,7 @@ const UsersList = ({ currentUserId }: UsersListProps) => {
                   <Typography
                     sx={{
                       fontSize: '0.78rem',
-                      color: 'rgba(0,0,0,0.55)',
+                      color: 'rgba(255,255,255,0.55)',
                       wordBreak: 'break-all',
                     }}
                   >
@@ -113,7 +113,7 @@ const UsersList = ({ currentUserId }: UsersListProps) => {
                   <Typography
                     sx={{
                       fontSize: '0.7rem',
-                      color: 'rgba(0,0,0,0.5)',
+                      color: 'rgba(255,255,255,0.5)',
                       mb: 0.3,
                     }}
                   >

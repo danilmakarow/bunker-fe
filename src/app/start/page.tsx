@@ -29,7 +29,7 @@ const StartPage = async () => {
         spacing={4}
         sx={{
           textAlign: 'center',
-          color: 'rgba(0,0,0,0.85)',
+          color: 'rgba(255,255,255,0.85)',
           alignItems: 'stretch',
         }}
       >
@@ -46,7 +46,7 @@ const StartPage = async () => {
           >
             {t('heading')}
           </Typography>
-          <Typography sx={{ fontSize: '1rem', color: 'rgba(0,0,0,0.65)' }}>
+          <Typography sx={{ fontSize: '1rem', color: 'rgba(255,255,255,0.65)' }}>
             {t('subheading')}
           </Typography>
         </Box>
@@ -65,7 +65,7 @@ const StartPage = async () => {
         <Typography
           sx={{
             fontSize: '0.85rem',
-            color: 'rgba(0,0,0,0.55)',
+            color: 'rgba(255,255,255,0.55)',
             lineHeight: 1.55,
             px: 1,
           }}

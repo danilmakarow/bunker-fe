@@ -71,7 +71,7 @@ const ContentRowCard = ({
               sx={{
                 fontSize: '1rem',
                 fontWeight: 600,
-                color: 'rgba(0,0,0,0.88)',
+                color: 'rgba(255,255,255,0.88)',
                 letterSpacing: '-0.01em',
                 wordBreak: 'break-word',
               }}
@@ -82,7 +82,7 @@ const ContentRowCard = ({
               <Typography
                 sx={{
                   fontSize: '0.8rem',
-                  color: 'rgba(0,0,0,0.55)',
+                  color: 'rgba(255,255,255,0.55)',
                   mt: 0.25,
                 }}
               >
@@ -101,7 +101,7 @@ const ContentRowCard = ({
           }}
         >
           <Box>
-            <Typography sx={{ fontSize: '0.88rem', color: 'rgba(0,0,0,0.7)' }}>
+            <Typography sx={{ fontSize: '0.88rem', color: 'rgba(255,255,255,0.7)' }}>
               {enabled ? t('enabled') : t('disabled')}
             </Typography>
           </Box>
@@ -114,7 +114,7 @@ const ContentRowCard = ({
         </Box>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-          <Typography sx={{ fontSize: '0.88rem', color: 'rgba(0,0,0,0.7)' }}>
+          <Typography sx={{ fontSize: '0.88rem', color: 'rgba(255,255,255,0.7)' }}>
             {t('weight')}
           </Typography>
           <Box sx={{ flex: 1 }} />

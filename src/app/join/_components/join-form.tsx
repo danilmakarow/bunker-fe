@@ -67,14 +67,14 @@ const JoinForm = () => {
             sx={{
               fontSize: '1.5rem',
               fontWeight: 700,
-              color: 'rgba(0,0,0,0.88)',
+              color: 'rgba(255,255,255,0.88)',
               letterSpacing: '-0.02em',
               mb: 0.75,
             }}
           >
             {t('heading')}
           </Typography>
-          <Typography sx={{ fontSize: '0.95rem', color: 'rgba(0,0,0,0.55)' }}>
+          <Typography sx={{ fontSize: '0.95rem', color: 'rgba(255,255,255,0.55)' }}>
             {t('subheading')}
           </Typography>
         </Box>
